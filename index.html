@@ -208,7 +208,7 @@ footer img{height:28px}
     <button class="chip" data-g="I" aria-pressed="true" style="--c:var(--navy)"><i></i>Inmediatos</button>
     <button class="chip" data-g="M" aria-pressed="true" style="--c:var(--mid)"><i></i>Mediatos</button>
     <button class="chip" data-g="P" aria-pressed="true" style="--c:var(--green)"><i></i>Potenciales</button>
-    <button class="chip" data-g="R" aria-pressed="false" style="--c:var(--grey-dk)"><i></i>Resto con reducción</button>
+    <button class="chip" data-g="R" aria-pressed="true" style="--c:var(--grey-dk)"><i></i>Resto con reducción</button>
   </div></div>
   <div class="chartgrid">
   <div class="chartbox" id="chartbox"><svg id="chart" viewBox="0 0 1100 560" role="img" aria-label="Gráfico de dispersión de SRCA frente a reducción del AVE"></svg><div class="tip" id="tip"></div></div>
@@ -270,7 +270,7 @@ const capName=h=>'Capítulo '+h.slice(0,2)+': '+(D.caps[String(+h.slice(0,2))]||
 const P=D.prod;
 const rows=D.rows.map(r=>{const p=P[r[1]]||[];return {k:r[0],h:r[1],g:r[2],t:r[3],s:r[4],red:r[5],pre:r[6],post:r[7],eu:r[8]||0,w:r[9]||0,y:r[10],
   d:p[0]||capName(r[1]),gen:!p[0],sec:p[9],en:p[1]||''}});
-const st={k:'MCS',g:new Set(['I','M','P']),sec:'',q:'',sort:'eu',dir:-1,page:0,sel:null,ft:'',fg:'',tab:'pais'};
+const st={k:'MCS',g:new Set(['I','M','P','R']),sec:'',q:'',sort:'eu',dir:-1,page:0,sel:null,ft:'',fg:'',tab:'pais'};
 const PS=25;
 const selS=document.getElementById('sector');
 D.secs.forEach((n,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=n;selS.appendChild(o)});
