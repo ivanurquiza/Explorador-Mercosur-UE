@@ -114,6 +114,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,th:focus-visible{o
 .gbc .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
 .gbc .col span{font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--ink);margin-bottom:3px}
 .gbc .col i{display:block;width:100%;background:var(--c);min-height:1px}
+
 /* gráfico */
 .chartbox{position:relative;border:1px solid var(--line);background:#fff}
 #chart{display:block;width:100%;height:auto}
@@ -165,6 +166,32 @@ footer .wrap{padding-block:16px;display:flex;justify-content:space-between;align
 footer img{height:28px}
 @media (max-width:640px){.ttl h1{font-size:21px} input[type=search]{width:100%} .controls{position:static}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  body{font-size:14.5px}
+  .seg{flex-wrap:nowrap;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+  .seg button{padding:7px 8px;white-space:nowrap;font-size:12px}
+  .controls .wrap{padding-block:10px}
+  h2{font-size:17.5px}
+  .figs{gap:12px;margin:6px 0 16px}.fig .n{font-size:25px}
+  .gb{gap:8px}.gbc{padding:8px 6px 6px}.gbc .cols{height:96px;gap:4px}.gbc .col span{font-size:10.5px}
+  .bars{grid-template-columns:92px 1fr 46px;gap:6px 8px;font-size:12px}
+  .bars .tr{height:16px}
+  .chartctl{gap:8px 10px}.chip{font-size:12px;padding:4px 9px 4px 8px}
+  input[type=search]{width:100%}
+  label.sel{width:100%}label.sel select{flex:1}
+  table.t{min-width:0;width:100%;font-size:12.5px}
+  table.t th{font-size:11px;white-space:normal;padding:6px 5px}
+  table.t td:nth-child(1){white-space:nowrap}
+  table.t td:nth-child(2){white-space:normal;min-width:120px}
+  .pill{font-size:10.5px;padding:2px 6px}
+  table.t th:nth-child(3),table.t td:nth-child(3),table.t th:nth-child(6),table.t td:nth-child(6),table.t th:nth-child(8),table.t td:nth-child(8),table.t th:nth-child(9),table.t td:nth-child(9),table.t th:nth-child(11),table.t td:nth-child(11){display:none}
+  table.t th,table.t td{padding:6px 5px}
+  .pager{flex-wrap:wrap;justify-content:space-between}.pager .count{width:100%;margin-bottom:4px}
+  .top10{padding:12px}
+  .panel h3{margin-right:70px}
+  .panel dl{grid-template-columns:1fr}.panel dt{margin-top:6px}
+  footer .wrap{flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -317,7 +344,10 @@ document.getElementById('bars').addEventListener('keydown',e=>{if(e.key==='Enter
 ['pais','sec'].forEach(t=>document.getElementById('tb-'+t).onclick=()=>{st.tab=t;document.getElementById('tb-pais').setAttribute('aria-selected',t==='pais');document.getElementById('tb-sec').setAttribute('aria-selected',t==='sec');bars()});
 // gráfico
 const svg=document.getElementById('chart'),tip=document.getElementById('tip'),box=document.getElementById('chartbox');
-const W=1100,H=560,m={l:62,r:20,t:22,b:52};
+let W=1100,H=560,m={l:62,r:20,t:22,b:52},KR=1;
+function dims(){const cw=Math.max(300,Math.round(box.clientWidth||1100));W=cw;
+  if(cw<640){H=Math.round(cw*1.05);m={l:44,r:10,t:20,b:46};}else{H=Math.round(cw*0.51);m={l:62,r:20,t:22,b:52};}
+  KR=Math.min(1,Math.max(0.5,cw/1100));svg.setAttribute('viewBox',`0 0 ${W} ${H}`);}
 const X0=Math.log10(0.05),X1=Math.log10(1000);
 const sx=v=>m.l+(Math.log10(Math.min(Math.max(v,0.05),1000))-X0)/(X1-X0)*(W-m.l-m.r);
 const sy=v=>m.t+(1.08-v)/(2.16)*(H-m.t-m.b);
@@ -325,32 +355,32 @@ const NS='http://www.w3.org/2000/svg';
 const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e};
 const txt=(a,s)=>{const t=el('text',a);t.textContent=s;svg.appendChild(t);return t};
 function chart(){
-  svg.textContent='';const th=D.thr[st.k];
+  svg.textContent='';dims();const th=D.thr[st.k];
   [-1,-0.5,0,0.5,1].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:sy(v),y2:sy(v),class:'ax'}));txt({x:m.l-8,y:sy(v)+4,'text-anchor':'end','font-size':12},fmt(v,1))});
-  [0.1,1,10,100,1000].forEach(v=>{svg.appendChild(el('line',{x1:sx(v),x2:sx(v),y1:m.t,y2:H-m.b,class:'ax'}));txt({x:sx(v),y:H-m.b+18,'text-anchor':'middle','font-size':12},fmt(v,v<1?1:0))});
-  txt({x:(m.l+W-m.r)/2,y:H-10,'text-anchor':'middle','font-size':13},'Reducción del AVE (pp, escala logarítmica)');
-  txt({x:16,y:(m.t+H-m.b)/2,'text-anchor':'middle','font-size':13,transform:`rotate(-90 16 ${(m.t+H-m.b)/2})`},'SRCA (especialización exportadora)');
+  [0.1,1,10,100,1000].forEach(v=>{svg.appendChild(el('line',{x1:sx(v),x2:sx(v),y1:m.t,y2:H-m.b,class:'ax'}));txt({x:sx(v),y:H-m.b+18,'text-anchor':v===1000?'end':'middle','font-size':12},fmt(v,v<1?1:0))});
+  txt({x:(m.l+W-m.r)/2,y:H-10,'text-anchor':'middle','font-size':W<640?11.5:13},W<640?'Reducción del AVE (pp, escala log.)':'Reducción del AVE (pp, escala logarítmica)');
+  txt({x:14,y:(m.t+H-m.b)/2,'text-anchor':'middle','font-size':W<640?11.5:13,transform:`rotate(-90 14 ${(m.t+H-m.b)/2})`},W<640?'SRCA':'SRCA (especialización exportadora)');
   svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:sy(0),y2:sy(0),class:'ref'}));
   svg.appendChild(el('line',{x1:sx(th[0]),x2:sx(th[0]),y1:m.t,y2:H-m.b,class:'ref'}));
   const mx=Math.max(1,...rows.filter(r=>r.k===st.k&&r.g==='C').map(r=>r.eu));
   const order=['R','P','M','I'];
   const data=base().filter(r=>r.g==='C'&&st.g.has(r.t)).sort((a,b)=>order.indexOf(a.t)-order.indexOf(b.t)||b.eu-a.eu);
   const g=el('g',{});
-  data.forEach(r=>{const rad=r.t==='R'?2+Math.sqrt(r.eu/mx)*24:3+Math.sqrt(r.eu/mx)*30;
+  data.forEach(r=>{const rad=(r.t==='R'?2+Math.sqrt(r.eu/mx)*24:3+Math.sqrt(r.eu/mx)*30)*KR;
     const c=el('circle',{cx:sx(r.red),cy:sy(r.s),r:rad.toFixed(1),fill:GC[r.t],'fill-opacity':r.t==='R'?0.55:0.85,class:(r.t==='R'?'r':'')+(st.sel===r.h?' hl':'')});c.__r=r;g.appendChild(c)});
   svg.appendChild(g);
   if(!data.length){const allC=base().filter(r=>r.g==='C').length;
     const msg=allC?'No hay productos con estos filtros.':(st.sec!==''?'En este sector no hay productos con reducción arancelaria: lo que se exporta a la UE ya ingresaba sin arancel o está sujeto a cuotas.':'No hay productos con reducción arancelaria que coincidan con la búsqueda.');
-    const bg=el('rect',{x:W/2-330,y:H/2-34,width:660,height:56,fill:'#fff',stroke:'#E1E4E7'});svg.appendChild(bg);
-    txt({x:W/2,y:H/2,'text-anchor':'middle','font-size':14,fill:'#3A3A3A'},msg.length>80?msg.slice(0,msg.indexOf(':')+1):msg);
-    if(msg.length>80)txt({x:W/2,y:H/2+16,'text-anchor':'middle','font-size':13},msg.slice(msg.indexOf(':')+2));}
+    const bw=Math.min(660,W-24);const bg=el('rect',{x:W/2-bw/2,y:H/2-34,width:bw,height:64,fill:'#fff',stroke:'#E1E4E7'});svg.appendChild(bg);
+    const lines=W<640?(msg.length>80?['En este sector no hay productos','con reducción arancelaria.']:[msg]):(msg.length>80?[msg.slice(0,msg.indexOf(':')+1),msg.slice(msg.indexOf(':')+2)]:[msg]);
+    lines.forEach((l,i)=>txt({x:W/2,y:H/2-6+i*18,'text-anchor':'middle','font-size':13,fill:'#3A3A3A'},l));}
   const top=data.filter(r=>r.t!=='R').slice().sort((a,b)=>b.eu-a.eu);
   const tl=(top.length?top:data.slice().sort((a,b)=>b.eu-a.eu)).slice(0,10);
   document.getElementById('top-t').textContent='Principales productos de '+NOM[st.k];
   document.getElementById('top').innerHTML=tl.length?tl.map(r=>`<li data-h="${r.h}" style="--c:${GC[r.t]}"><i></i><span class="nm">${r.d}</span><span class="v">${fmt(r.eu,0)}<small>${fmt(r.red,1)} pp</small></span></li>`).join(''):'<li style="display:block;cursor:default">Sin productos con reducción arancelaria para estos filtros.</li>';
   txt({x:sx(th[0])+6,y:m.t+14,'font-size':12.5,class:'lab'},'Mediana: '+fmt(th[0],1)+' pp');
-  txt({x:W-m.r-6,y:m.t+14,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Inmediatos y mediatos');
-  txt({x:W-m.r-6,y:H-m.b-8,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Potenciales');
+  if(W>=640){txt({x:W-m.r-6,y:m.t+14,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Inmediatos y mediatos');
+  txt({x:W-m.r-6,y:H-m.b-8,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Potenciales');}
   document.getElementById('note-chart').textContent='Los ejes cortan en la mediana de reducción del AVE de '+NOM[st.k]+' ('+fmt(th[0],2)+' pp) y en SRCA = 0. Reducciones menores a 0,05 pp o mayores a 1.000 pp se ubican en el borde del gráfico; las superiores a 100 pp provienen de derechos específicos.';
 }
 function tipHtml(r){return `<b>${r.d}</b><div style="color:var(--ink-2)">SA ${r.h} · <span class="g" style="color:${r.t==='R'?'var(--ink-2)':GC[r.t]}">${r.t==='R'?'Resto con reducción':GN[r.t]}</span></div><table>
@@ -425,6 +455,7 @@ document.getElementById('csv').onclick=()=>{
 function refresh(){st.page=0;bars();chart();table()}
 function setPais(k){st.k=k;st.sel=null;document.querySelectorAll('#pais button,#pais2 button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===k));kpis();refresh()}
 document.querySelectorAll('#pais button,#pais2 button').forEach(b=>b.onclick=()=>setPais(b.dataset.k));
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(chart,150)});
 document.getElementById('top').addEventListener('click',e=>{const li=e.target.closest('li[data-h]');if(li)ficha(li.dataset.h)});
 document.querySelectorAll('#grupos .chip').forEach(b=>b.onclick=()=>{const g=b.dataset.g;if(st.g.has(g))st.g.delete(g);else st.g.add(g);b.setAttribute('aria-pressed',st.g.has(g));chart()});
 SELS.forEach(s=>s.onchange=()=>{st.sec=s.value;SELS.forEach(x=>x.value=st.sec);refresh()});
