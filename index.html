@@ -339,10 +339,15 @@ function chart(){
   data.forEach(r=>{const rad=r.t==='R'?2+Math.sqrt(r.eu/mx)*24:3+Math.sqrt(r.eu/mx)*30;
     const c=el('circle',{cx:sx(r.red),cy:sy(r.s),r:rad.toFixed(1),fill:GC[r.t],'fill-opacity':r.t==='R'?0.55:0.85,class:(r.t==='R'?'r':'')+(st.sel===r.h?' hl':'')});c.__r=r;g.appendChild(c)});
   svg.appendChild(g);
+  if(!data.length){const allC=base().filter(r=>r.g==='C').length;
+    const msg=allC?'No hay productos con estos filtros.':(st.sec!==''?'En este sector no hay productos con reducción arancelaria: lo que se exporta a la UE ya ingresaba sin arancel o está sujeto a cuotas.':'No hay productos con reducción arancelaria que coincidan con la búsqueda.');
+    const bg=el('rect',{x:W/2-330,y:H/2-34,width:660,height:56,fill:'#fff',stroke:'#E1E4E7'});svg.appendChild(bg);
+    txt({x:W/2,y:H/2,'text-anchor':'middle','font-size':14,fill:'#3A3A3A'},msg.length>80?msg.slice(0,msg.indexOf(':')+1):msg);
+    if(msg.length>80)txt({x:W/2,y:H/2+16,'text-anchor':'middle','font-size':13},msg.slice(msg.indexOf(':')+2));}
   const top=data.filter(r=>r.t!=='R').slice().sort((a,b)=>b.eu-a.eu);
   const tl=(top.length?top:data.slice().sort((a,b)=>b.eu-a.eu)).slice(0,10);
   document.getElementById('top-t').textContent='Principales productos de '+NOM[st.k];
-  document.getElementById('top').innerHTML=tl.length?tl.map(r=>`<li data-h="${r.h}" style="--c:${GC[r.t]}"><i></i><span class="nm">${r.d}</span><span class="v">${fmt(r.eu,0)}<small>${fmt(r.red,1)} pp</small></span></li>`).join(''):'<li style="display:block;cursor:default">No hay productos con estos filtros.</li>';
+  document.getElementById('top').innerHTML=tl.length?tl.map(r=>`<li data-h="${r.h}" style="--c:${GC[r.t]}"><i></i><span class="nm">${r.d}</span><span class="v">${fmt(r.eu,0)}<small>${fmt(r.red,1)} pp</small></span></li>`).join(''):'<li style="display:block;cursor:default">Sin productos con reducción arancelaria para estos filtros.</li>';
   txt({x:sx(th[0])+6,y:m.t+14,'font-size':12.5,class:'lab'},'Mediana: '+fmt(th[0],1)+' pp');
   txt({x:W-m.r-6,y:m.t+14,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Inmediatos y mediatos');
   txt({x:W-m.r-6,y:H-m.b-8,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Potenciales');
