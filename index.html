@@ -219,12 +219,12 @@ footer img{height:28px}
   <h3 class="sub3">Peso de cada grupo de beneficio en las exportaciones a la UE</h3>
   <p class="cap">Porcentaje del valor exportado a la UE de cada país, promedio 2022-2024. Cada país se clasifica con su propia mediana de reducción del AVE y su propio peso promedio de la UE.</p>
   <div class="gb" id="gb"></div>
-  <div class="tleg" style="margin-top:10px"><span style="--c:var(--navy)"><i></i>Inmediatos</span><span style="--c:var(--mid)"><i></i>Mediatos</span><span style="--c:var(--green)"><i></i>Potenciales</span><span style="color:var(--ink-2)">Hacé clic en un país para seleccionarlo.</span></div>
+  <div class="tleg" style="margin-top:10px"><span style="--c:var(--navy)"><i></i>Inmediatos</span><span style="--c:var(--mid)"><i></i>Mediatos</span><span style="--c:var(--green)"><i></i>Potenciales</span><span style="color:var(--ink-2)">Haga clic en un país para seleccionarlo.</span></div>
 </section>
 
 <section class="wrap">
   <h2>Ventaja comparativa y reducción arancelaria</h2>
-  <p class="cap">Cada punto es un producto (SA a 6 dígitos) con reducción del arancel y sin cuota. El tamaño refleja las exportaciones a la UE, promedio 2022-2024. Pasá el mouse para ver el detalle y hacé clic para abrir la ficha del producto.</p>
+  <p class="cap">Cada punto es un producto (SA a 6 dígitos) con reducción del arancel y sin cuota. El tamaño refleja las exportaciones a la UE, promedio 2022-2024. Pase el cursor sobre un punto para ver el detalle y haga clic para abrir la ficha del producto.</p>
   <div class="chartctl">
   <div class="seg" role="group" aria-label="País del gráfico" id="pais2">
     <button data-k="MCS" aria-pressed="true">MERCOSUR</button><button data-k="ARG" aria-pressed="false">Argentina</button><button data-k="BRA" aria-pressed="false">Brasil</button><button data-k="PRY" aria-pressed="false">Paraguay</button><button data-k="URY" aria-pressed="false">Uruguay</button>
@@ -247,20 +247,20 @@ footer img{height:28px}
 
 <section class="wrap" id="trat">
   <h2>Exportaciones a la UE según su tratamiento en el acuerdo</h2>
-  <p class="cap">Valor exportado a la UE, promedio 2022-2024. En la vista por sector, hacé clic en un sector para filtrar el gráfico de ventaja comparativa y la base de productos.</p>
+  <p class="cap">Valor exportado a la UE, promedio 2022-2024. En la vista por sector, haga clic en un sector para filtrar el gráfico de ventaja comparativa y la base de productos.</p>
   <div class="tabs" role="tablist"><button role="tab" id="tb-pais" aria-selected="true">Por país</button><button role="tab" id="tb-sec" aria-selected="false">Por sector</button></div>
-  <div class="tleg"><span style="--c:#CFD2D5"><i></i>Sin cambios (ya exentas)</span><span style="--c:var(--mid)"><i></i>Con reducción arancelaria</span><span style="--c:var(--green)"><i></i>Sujetas a cuotas</span><span style="--c:#8A8F94"><i></i>Arancel sin cambio</span></div>
+  <div class="tleg"><span style="--c:#CFD2D5"><i></i>Ya exentos</span><span style="--c:var(--mid)"><i></i>Con reducción arancelaria</span><span style="--c:var(--green)"><i></i>Sujetas a cuotas</span><span style="--c:#8A8F94"><i></i>Arancel sin cambio</span></div>
   <div class="bars" id="bars"></div>
   <p class="note" id="note-trat"></p>
 </section>
 
 <section class="wrap" id="listado">
   <div class="tblhead">
-    <div><h2>Base de productos</h2><p class="cap" style="margin:0">Todos los productos exportados a la UE. Ordená por cualquier columna y hacé clic en una fila para ver la ficha. Valores en millones de USD, promedio 2022-2024; aranceles en porcentaje y puntos porcentuales.</p></div>
+    <div><h2>Base de productos</h2><p class="cap" style="margin:0">Todos los productos exportados a la UE. Ordene por cualquier columna y haga clic en una fila para ver la ficha. Valores en millones de USD, promedio 2022-2024; aranceles en porcentaje y puntos porcentuales.</p></div>
     <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <label class="sel" for="sector2">Sector <select id="sector2" class="fsec"><option value="">Todos</option></select></label>
       <input type="search" id="q2" class="fq" placeholder="Buscar producto o código SA" aria-label="Buscar producto o código SA en la base">
-      <label class="sel" for="ftrat">Tratamiento <select id="ftrat"><option value="">Todos</option><option value="C">Con reducción arancelaria</option><option value="E">Sin cambios (ya exentas)</option><option value="Q">Sujetas a cuotas</option><option value="N">Arancel sin cambio</option></select></label>
+      <label class="sel" for="ftrat">Tratamiento <select id="ftrat"><option value="">Todos</option><option value="C">Con reducción arancelaria</option><option value="E">Ya exentos</option><option value="Q">Sujetas a cuotas</option><option value="N">Arancel sin cambio</option></select></label>
       <label class="sel" for="fgrp">Grupo <select id="fgrp"><option value="">Todos</option><option value="I">Inmediatos</option><option value="M">Mediatos</option><option value="P">Potenciales</option><option value="O">Los tres grupos</option></select></label>
       <button class="btn" id="csv">Descargar CSV</button></div>
   </div>
@@ -292,7 +292,7 @@ const NOM={MCS:'MERCOSUR',ARG:'Argentina',BRA:'Brasil',PRY:'Paraguay',URY:'Urugu
 const KS=['MCS','ARG','BRA','PRY','URY'];
 const GN={I:'Inmediato',M:'Mediato',P:'Potencial',R:'Resto',"":"—"};
 const GC={I:'#10577F',M:'#3F86B0',P:'#55A849',R:'#CFD2D5'};
-const TN={E:'Sin cambios',C:'Con reducción',Q:'Cuota',N:'Arancel sin cambio'};
+const TN={E:'Ya exento',C:'Con reducción',Q:'Cuota',N:'Arancel sin cambio'};
 const TC={E:'#CFD2D5',C:'#3F86B0',Q:'#55A849',N:'#8A8F94'};
 const GO={I:0,M:1,P:2,R:3,"":4};
 const fmt=(v,d)=>{if(v===null||v===undefined||Number.isNaN(v))return'n/d';const s=Math.abs(v).toFixed(d).split('.');s[0]=s[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');return(v<0&&Number(v.toFixed(d))!==0?'−':'')+s.join(',')};
@@ -334,8 +334,8 @@ function bars(){
     const tot=st.tab==='pais'?`${fmt(o.v.C/o.v.tot*100,1)}%`:`${fmt(o.v.tot,0)}`;
     return `<div class="row" data-key="${o.key}" tabindex="0"><div class="lb${o.on?' on':''}">${o.lab}</div><div class="tr">${seg}</div><div class="tot">${tot}</div></div>`}).join('');
   document.getElementById('note-trat').textContent=st.tab==='pais'
-   ?'Barras al 100% del valor exportado a la UE por cada país. A la derecha, la proporción con reducción arancelaria. Hacé clic en un país para seleccionarlo.'
-   :'Valor exportado a la UE por '+NOM[st.k]+', en millones de USD (a la derecha, el total del sector). Secciones del Sistema Armonizado.';
+   ?'Barras al 100% del valor exportado a la UE por cada país. A la derecha, la proporción con reducción arancelaria. Haga clic en un país para seleccionarlo.'
+   :'Valor exportado a la UE por '+(st.k==='MCS'?'el MERCOSUR':NOM[st.k])+', en millones de USD (a la derecha, el total del sector). Secciones del Sistema Armonizado.';
 }
 function sum4(x){const o={E:0,C:0,Q:0,N:0,tot:0};x.forEach(r=>{o[r.g]+=r.eu;o.tot+=r.eu});return o}
 document.getElementById('bars').addEventListener('click',e=>{const r=e.target.closest('.row');if(!r)return;
@@ -376,12 +376,12 @@ function chart(){
     lines.forEach((l,i)=>txt({x:W/2,y:H/2-6+i*18,'text-anchor':'middle','font-size':13,fill:'#3A3A3A'},l));}
   const top=data.filter(r=>r.t!=='R').slice().sort((a,b)=>b.eu-a.eu);
   const tl=(top.length?top:data.slice().sort((a,b)=>b.eu-a.eu)).slice(0,10);
-  document.getElementById('top-t').textContent='Principales productos de '+NOM[st.k];
+  document.getElementById('top-t').textContent='Principales productos '+(st.k==='MCS'?'del MERCOSUR':'de '+NOM[st.k]);
   document.getElementById('top').innerHTML=tl.length?tl.map(r=>`<li data-h="${r.h}" style="--c:${GC[r.t]}"><i></i><span class="nm">${r.d}</span><span class="v">${fmt(r.eu,0)}<small>${fmt(r.red,1)} pp</small></span></li>`).join(''):'<li style="display:block;cursor:default">Sin productos con reducción arancelaria para estos filtros.</li>';
-  txt({x:sx(th[0])+6,y:m.t+14,'font-size':12.5,class:'lab'},'Mediana: '+fmt(th[0],1)+' pp');
+  txt({x:sx(th[0])+6,y:m.t+14,'font-size':12.5,class:'lab'},'Mediana: '+fmt(th[0],Math.abs(th[0]*10-Math.round(th[0]*10))>1e-6?2:1)+' pp');
   if(W>=640){txt({x:W-m.r-6,y:m.t+14,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Inmediatos y mediatos');
   txt({x:W-m.r-6,y:H-m.b-8,'text-anchor':'end','font-size':12.5,'font-style':'italic',class:'lab'},'Potenciales');}
-  document.getElementById('note-chart').textContent='Los ejes cortan en la mediana de reducción del AVE de '+NOM[st.k]+' ('+fmt(th[0],2)+' pp) y en SRCA = 0. Reducciones menores a 0,05 pp o mayores a 1.000 pp se ubican en el borde del gráfico; las superiores a 100 pp provienen de derechos específicos.';
+  document.getElementById('note-chart').textContent='Los ejes cortan en la mediana de reducción del AVE '+(st.k==='MCS'?'del MERCOSUR':'de '+NOM[st.k])+' ('+fmt(th[0],Math.abs(th[0]*10-Math.round(th[0]*10))>1e-6?2:1)+' pp) y en SRCA = 0. Reducciones menores a 0,05 pp o mayores a 1.000 pp se ubican en el borde del gráfico; las superiores a 100 pp provienen de derechos específicos.';
 }
 function tipHtml(r){return `<b>${r.d}</b><div style="color:var(--ink-2)">SA ${r.h} · <span class="g" style="color:${r.t==='R'?'var(--ink-2)':GC[r.t]}">${r.x?'Excluido (Anexo 3)':r.t==='R'?'Resto con reducción':GN[r.t]}</span></div><table>
 <tr><td>Exportaciones a la UE</td><td>USD ${fmt(r.eu,1)} M</td></tr><tr><td>Exportaciones al mundo</td><td>USD ${fmt(r.w,1)} M</td></tr>
