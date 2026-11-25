@@ -117,6 +117,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,th:focus-visible{o
 
 /* gráfico */
 .chartbox{position:relative;border:1px solid var(--line);background:#fff}
+.chartcol{min-width:0}
 #chart{display:block;width:100%;height:auto}
 #chart text{font-family:var(--f-body);fill:var(--ink-2)}
 #chart .ax{stroke:var(--line)}
@@ -236,10 +237,9 @@ footer img{height:28px}
   <input type="search" id="q" class="fq" placeholder="Buscar producto o código SA" aria-label="Buscar producto o código SA">
   </div>
   <div class="chartgrid">
-  <div class="chartbox" id="chartbox"><svg id="chart" viewBox="0 0 1100 560" role="img" aria-label="Gráfico de dispersión de SRCA frente a reducción del AVE"></svg><div class="tip" id="tip"></div></div>
+  <div class="chartcol"><div class="chartbox" id="chartbox"><svg id="chart" viewBox="0 0 1100 560" role="img" aria-label="Gráfico de dispersión de SRCA frente a reducción del AVE"></svg><div class="tip" id="tip"></div></div><p class="note" id="note-chart"></p></div>
   <aside class="top10"><h3 id="top-t">Principales productos</h3><p class="cap" style="margin:0 0 8px">Por exportaciones a la UE (millones de USD) según los filtros elegidos; debajo, la reducción del AVE.</p><ol id="top"></ol></aside>
   </div>
-  <p class="note" id="note-chart"></p>
 </section>
 
 <section class="wrap" id="trat">
